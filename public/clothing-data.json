@@ -1,0 +1,55 @@
+{
+  "tops": [
+    {
+      "id": "top-001",
+      "name": "Camiseta LA POPLU Negra",
+      "image": "/clothing/tops/top-001.png",
+      "category": "top",
+      "color": "black",
+      "compatibleWith": ["bottom-001", "bottom-002", "bottom-003"]
+    },
+    {
+      "id": "top-002",
+      "name": "Camiseta LA POPLU Blanca",
+      "image": "/clothing/tops/top-002.png",
+      "category": "top",
+      "color": "white",
+      "compatibleWith": ["bottom-001", "bottom-002", "bottom-003"]
+    },
+    {
+      "id": "top-003",
+      "name": "Hoodie LA POPLU Magenta",
+      "image": "/clothing/tops/top-003.png",
+      "category": "top",
+      "color": "magenta",
+      "compatibleWith": ["bottom-001", "bottom-002"]
+    }
+  ],
+  "bottoms": [
+    {
+      "id": "bottom-001",
+      "name": "Pantalón Negro",
+      "image": "/clothing/bottoms/bottom-001.png",
+      "category": "bottom",
+      "color": "black",
+      "compatibleWith": ["top-001", "top-002", "top-003"]
+    },
+    {
+      "id": "bottom-002",
+      "name": "Falda Cuadros",
+      "image": "/clothing/bottoms/bottom-002.png",
+      "category": "bottom",
+      "color": "pattern",
+      "compatibleWith": ["top-001", "top-002"]
+    },
+    {
+      "id": "bottom-003",
+      "name": "Jeans Azul",
+      "image": "/clothing/bottoms/bottom-003.png",
+      "category": "bottom",
+      "color": "blue",
+      "compatibleWith": ["top-001", "top-002"]
+    }
+  ],
+  "shoes": []
+}
