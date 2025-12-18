@@ -75,15 +75,15 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
           <span className="text-white text-sm">LA POPLU's Wardrobe - Fall Fashions</span>
         </div>
         <div className="flex gap-1">
-          <div className="w-5 h-5 bg-[#316AC5] hover:bg-[#4178C7] flex items-center justify-center text-white text-xs">_</div>
-          <div className="w-5 h-5 bg-[#316AC5] hover:bg-[#4178C7] flex items-center justify-center text-white text-xs">□</div>
-          <div className="w-5 h-5 bg-[#D93831] hover:bg-[#E14842] flex items-center justify-center text-white text-xs">×</div>
+          <div className="w-5 h-5 bg-[#316AC5] hover:bg-[#4178C7] flex items-center justify-center text-white text-xs cursor-pointer">_</div>
+          <div className="w-5 h-5 bg-[#316AC5] hover:bg-[#4178C7] flex items-center justify-center text-white text-xs cursor-pointer">□</div>
+          <div className="w-5 h-5 bg-[#D93831] hover:bg-[#E14842] flex items-center justify-center text-white text-xs cursor-pointer">×</div>
         </div>
       </div>
 
       <div className="flex flex-1" style={{ height: 'calc(100vh - 32px)' }}>
-        {/* Left sidebar with leopard pattern */}
-        <div className="w-64 relative overflow-hidden border-r-2" style={{ borderColor: '#8C8C8C' }}>
+        {/* Left sidebar with leopard pattern - ONLY DESKTOP */}
+        <div className="hidden lg:block w-64 relative overflow-hidden border-r-2" style={{ borderColor: '#8C8C8C' }}>
           <LeopardPattern />
         </div>
 
@@ -154,8 +154,8 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
           </div>
         </div>
 
-        {/* Right sidebar with leopard pattern */}
-        <div className="w-64 relative overflow-hidden border-l-2" style={{ borderColor: '#8C8C8C' }}>
+        {/* Right sidebar with leopard pattern - ONLY DESKTOP */}
+        <div className="hidden lg:block w-64 relative overflow-hidden border-l-2" style={{ borderColor: '#8C8C8C' }}>
           <LeopardPattern />
         </div>
       </div>
@@ -170,10 +170,15 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
       >
         <div className="max-w-6xl mx-auto">
           {/* Category navigation */}
-          <div className="grid grid-cols-2 gap-6 mb-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-4">
             {/* TOPS controls */}
             <div className="space-y-2">
-              <div className="text-center text-xs uppercase tracking-wider text-gray-700 mb-2">
+              {/* Mobile header - show name in mobile */}
+              <div className="lg:hidden text-center text-xs uppercase tracking-wider text-gray-700 mb-2">
+                TOPS - {currentTop?.name}
+              </div>
+              {/* Desktop header - show name in desktop */}
+              <div className="hidden lg:block text-center text-xs uppercase tracking-wider text-gray-700 mb-2">
                 Tops - {currentTop?.name}
               </div>
               <div className="flex items-center justify-center gap-2">
@@ -204,7 +209,12 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
 
             {/* BOTTOMS controls */}
             <div className="space-y-2">
-              <div className="text-center text-xs uppercase tracking-wider text-gray-700 mb-2">
+              {/* Mobile header - show name in mobile */}
+              <div className="lg:hidden text-center text-xs uppercase tracking-wider text-gray-700 mb-2">
+                BOTTOMS - {currentBottom?.name}
+              </div>
+              {/* Desktop header - show name in desktop */}
+              <div className="hidden lg:block text-center text-xs uppercase tracking-wider text-gray-700 mb-2">
                 Bottoms - {currentBottom?.name}
               </div>
               <div className="flex items-center justify-center gap-2">
@@ -235,7 +245,7 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
           </div>
 
           {/* Main action buttons */}
-          <div className="flex gap-4 justify-center pt-3 border-t" style={{ borderColor: '#8C8C8C' }}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-3 border-t" style={{ borderColor: '#8C8C8C' }}>
             <XPButton large>
               Browse
             </XPButton>

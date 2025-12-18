@@ -10,7 +10,7 @@ interface LeopardPatternProps {
 export function LeopardPattern({ 
   opacity = 0.8, 
   blendMode = 'multiply',
-  imageUrl = 'src/assets/utils/leopard-pattern.png' 
+  imageUrl = '/utils/leopard-pattern.png' 
 }: LeopardPatternProps) {
   return (
     <div
