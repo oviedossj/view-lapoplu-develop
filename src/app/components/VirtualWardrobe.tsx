@@ -246,9 +246,6 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
 
           {/* Main action buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-3 border-t" style={{ borderColor: '#8C8C8C' }}>
-            <XPButton large>
-              Browse
-            </XPButton>
             <XPButton large onClick={() => setShowDressMe(true)} primary>
               Dress Me
             </XPButton>

@@ -48,14 +48,14 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
         </div>
       </div>
 
-      <div className="flex" style={{ height: 'calc(100vh - 32px)' }}>
-        {/* Left sidebar with leopard pattern - expanded to w-80 */}
-        <div className="w-80 relative overflow-hidden border-r-2" style={{ borderColor: '#8C8C8C' }}>
+      <div className="flex flex-col md:flex-row min-h-[calc(100vh-32px)]">
+        {/* Left sidebar with leopard pattern - hidden on mobile */}
+        <div className="hidden md:block w-80 relative overflow-hidden border-r-2" style={{ borderColor: '#8C8C8C' }}>
           <LeopardPattern />
         </div>
 
         {/* Main content */}
-        <div className="flex-1 p-6 flex items-center justify-center">
+        <div className="flex-1 p-4 md:p-6 flex justify-center">
           <div className="w-full max-w-3xl">
             {/* Window container */}
             <div 
@@ -78,10 +78,19 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
                 YOUR OUTFIT
               </div>
 
-              {/* Top section - FIXED: Reduced empty space */}
+              {/* Top section - FIXED HEIGHT RESPONSIVE */}
               <div className="mb-6">
                 <div 
-                  className="p-3 min-h-[320px] flex items-center justify-center relative"
+                  className="
+                    p-3
+                    flex
+                    items-center
+                    justify-center
+                    relative
+                    h-[240px]
+                    sm:h-[280px]
+                    md:h-[320px]
+                  "
                   style={{
                     backgroundColor: '#F0F0F0',
                     border: '2px solid',
@@ -92,11 +101,11 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
                   <ImageWithFallback
                     src={currentTop.image}
                     alt={currentTop.name}
-                    className="max-h-[300px] w-auto mx-auto object-contain"
+                    className="max-h-full max-w-full object-contain"
                   />
                   
-                  {/* Arrow and label */}
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-3">
+                  {/* Arrow and label - MOBILE FIX */}
+                  <div className="absolute right-2 bottom-2 flex items-center gap-2 md:top-1/2 md:-translate-y-1/2 md:right-4">
                     <div 
                       className="text-right p-2 text-xs"
                       style={{
@@ -113,10 +122,19 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
                 </div>
               </div>
 
-              {/* Bottom section - FIXED: Reduced empty space */}
+              {/* Bottom section - FIXED HEIGHT RESPONSIVE */}
               <div className="mb-6">
                 <div 
-                  className="p-3 min-h-[320px] flex items-center justify-center relative"
+                  className="
+                    p-3
+                    flex
+                    items-center
+                    justify-center
+                    relative
+                    h-[240px]
+                    sm:h-[280px]
+                    md:h-[320px]
+                  "
                   style={{
                     backgroundColor: '#F0F0F0',
                     border: '2px solid',
@@ -127,11 +145,11 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
                   <ImageWithFallback
                     src={currentBottom.image}
                     alt={currentBottom.name}
-                    className="max-h-[300px] w-auto mx-auto object-contain"
+                    className="max-h-full max-w-full object-contain"
                   />
                   
-                  {/* Arrow and label */}
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-3">
+                  {/* Arrow and label - MOBILE FIX */}
+                  <div className="absolute right-2 bottom-2 flex items-center gap-2 md:top-1/2 md:-translate-y-1/2 md:right-4">
                     <div 
                       className="text-right p-2 text-xs"
                       style={{
@@ -176,8 +194,8 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
           </div>
         </div>
 
-        {/* Right sidebar with leopard pattern - expanded to w-80 */}
-        <div className="w-80 relative overflow-hidden border-l-2" style={{ borderColor: '#8C8C8C' }}>
+        {/* Right sidebar with leopard pattern - hidden on mobile */}
+        <div className="hidden md:block w-80 relative overflow-hidden border-l-2" style={{ borderColor: '#8C8C8C' }}>
           <LeopardPattern />
         </div>
       </div>
