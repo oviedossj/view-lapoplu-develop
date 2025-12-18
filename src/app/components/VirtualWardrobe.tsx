@@ -1,3 +1,4 @@
+// VirtualWardrobe.tsx
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
@@ -56,17 +57,17 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
 
   return (
     <div 
-      className="min-h-screen text-black flex flex-col"
+      className="h-screen text-black flex flex-col relative"
       style={{
-        backgroundColor: '#ECE9D8' // Windows XP beige
+        backgroundColor: '#272829ff'
       }}
     >
       {/* Windows XP style title bar */}
       <div 
         className="h-8 flex items-center px-2"
         style={{
-          background: 'linear-gradient(to bottom, #0997FF 0%, #0053EE 50%, #0050EE 50%, #06F 100%)',
-          borderBottom: '1px solid #0050EE'
+          background: 'linear-gradient(to bottom, #090a0aff 0%, #060607ff 50%, #080909ff 50%, rgba(14, 15, 17, 1) 100%)',
+          borderBottom: '1px solid #070708ff'
         }}
       >
         <div className="flex items-center gap-2 flex-1">
@@ -93,10 +94,10 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
             <div 
               className="mb-2 px-3 py-1 text-sm"
               style={{
-                background: 'linear-gradient(to bottom, #0997FF 0%, #0053EE 100%)',
+                background: 'linear-gradient(to bottom, #0f1113ff 0%, #0b0c0dff 100%)',
                 color: 'white',
                 borderRadius: '3px 3px 0 0',
-                border: '1px solid #0050EE'
+                border: '1px solid #0b0b0cff'
               }}
             >
               TOPS
@@ -125,10 +126,10 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
             <div 
               className="mb-2 px-3 py-1 text-sm"
               style={{
-                background: 'linear-gradient(to bottom, #0997FF 0%, #0053EE 100%)',
+                background: 'linear-gradient(to bottom, #0f1113ff 0%, #0b0c0dff 100%)',
                 color: 'white',
                 borderRadius: '3px 3px 0 0',
-                border: '1px solid #0050EE'
+                border: '1px solid #0b0b0cff'
               }}
             >
               BOTTOMS
@@ -164,7 +165,7 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
         className="border-t-2 p-4"
         style={{
           backgroundColor: '#ECE9D8',
-          borderColor: '#8C8C8C'
+          borderColor: '#383839ff'
         }}
       >
         <div className="max-w-6xl mx-auto">

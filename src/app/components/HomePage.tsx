@@ -3,11 +3,8 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Button } from './ui/button';
 import { Sparkles, Mail, Phone, MapPin, Instagram, Facebook, Twitter } from 'lucide-react';
 import { Logo } from './Logo';
-// import colorPaletteImg from 'src/assets/41176e103ab5d6988d96688e755af21d79fbb1e2.png';
-// import packagingImg from '../assets/fb4edbbd5742abc86facf7c01fe8c9af68115bf1.png';
-// import paletteImg from '@/assets/41176e103ab5d6988d96688e755af21d79fbb1e2.png';
-// import packagingImg from '@/assets/fb4edbbd5742abc86facf7c01fe8c9af68115bf1.png';
-
+import { VirtualWardrobe } from './VirtualWardrobe';
+import  clothingData  from '../../data/clothingData';
 interface HomePageProps {
   onNavigateToWardrobe: () => void;
 }
@@ -19,7 +16,8 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
       <nav className="border-b border-gray-800 sticky top-0 bg-black/95 backdrop-blur-sm z-50">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Logo className="text-3xl" />
+            {/* Logo size small en el nav */}
+            <Logo size="md" />
             
             <div className="hidden md:flex items-center gap-8">
               <a href="#home" className="hover:text-[#E91EA5] transition-colors uppercase text-sm tracking-wider">Inicio</a>
@@ -30,7 +28,11 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
             </div>
 
             <Button
-              onClick={onNavigateToWardrobe}
+              onClick={() =>
+                document
+                  .getElementById('experience')
+                  ?.scrollIntoView({ behavior: 'smooth' })
+              }
               className="bg-[#E91EA5] hover:bg-[#c91890] text-white"
             >
               <Sparkles className="mr-2 h-4 w-4" />
@@ -50,24 +52,18 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
 
         <div className="relative z-10 text-center px-4">
           <div className="mb-12">
-            <Logo className="text-9xl justify-center mb-6" />
-            <p className="text-2xl text-gray-400 tracking-widest uppercase">Desliza y Brilla</p>
-            <p className="text-lg text-gray-500 mt-2">Moda urbana con actitud</p>
+            {/* Logo size large en el hero - centrado */}
+            <div className="flex justify-center mb-6">
+              <Logo size="lg" />
+            </div>
+            <p className="text-lg text-gray-500 mt-2">El Cuerpo viste para ser visto</p>
           </div>
 
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center mt-12">
             <Button
-              onClick={onNavigateToWardrobe}
-              size="lg"
-              className="bg-gradient-to-r from-[#0FD9ED] to-[#E91EA5] hover:from-[#0ec9dd] hover:to-[#d91a95] text-white px-12 py-6 text-lg"
-            >
-              <Sparkles className="mr-2 h-5 w-5" />
-              Prueba Virtual Wardrobe
-            </Button>
-            <Button
               size="lg"
               variant="outline"
-              className="border-[#0FD9ED] text-[#0FD9ED] hover:bg-[#0FD9ED]/10 px-12 py-6 text-lg"
+              className="bg-gradient-to-r from-[#0FD9ED] to-[#E91EA5] hover:from-[#0ec9dd] hover:to-[#d91a95] text-white px-12 py-6 text-lg"
               onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Ver Colección
@@ -96,7 +92,7 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
                   </div>
                 </div>
                 <div className="p-6">
-                  <p className="text-gray-400 text-sm mb-4">Camisetas, hoodies, chaquetas y más. Encuentra tu estilo perfecto.</p>
+                  <p className="text-gray-400 text-sm mb-4">Camperas, hoodies, tops y más.</p>
                   <Button className="w-full bg-[#0FD9ED]/20 hover:bg-[#0FD9ED]/30 border border-[#0FD9ED] text-[#0FD9ED]">
                     Ver Tops
                   </Button>
@@ -114,7 +110,7 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
                   </div>
                 </div>
                 <div className="p-6">
-                  <p className="text-gray-400 text-sm mb-4">Pantalones, faldas, shorts. Comodidad y estilo en cada paso.</p>
+                  <p className="text-gray-400 text-sm mb-4">Pantalones, faldas, shorts..</p>
                   <Button className="w-full bg-[#E91EA5]/20 hover:bg-[#E91EA5]/30 border border-[#E91EA5] text-[#E91EA5]">
                     Ver Bottoms
                   </Button>
@@ -132,7 +128,7 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
                   </div>
                 </div>
                 <div className="p-6">
-                  <p className="text-gray-400 text-sm mb-4">Complementa tu look con nuestros accesorios exclusivos.</p>
+                  <p className="text-gray-400 text-sm mb-4">Complementa tu look con nosotros.</p>
                   <Button className="w-full bg-purple-500/20 hover:bg-purple-500/30 border border-purple-400 text-purple-400">
                     Ver Accesorios
                   </Button>
@@ -140,6 +136,16 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Experience Section */}
+      <section
+        id="experience"
+        className="min-h-screen border-t border-gray-800 bg-black flex items-center"
+      >
+        <div className="w-full">
+          <VirtualWardrobe clothingData={clothingData} />
         </div>
       </section>
 
@@ -236,7 +242,7 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
       {/* Contact Section */}
       <section id="contact" className="py-20 px-4 border-t border-gray-800">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl mb-12 text-center uppercase tracking-wider">Contáctanos</h2>
+          <h2 className="text-4xl mb-12 text-center uppercase tracking-wider">Contactanos</h2>
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             {/* Contact Info */}
@@ -245,33 +251,66 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
                 <MapPin className="h-6 w-6 text-[#E91EA5] mt-1" />
                 <div>
                   <h3 className="mb-2">Dirección</h3>
-                  <p className="text-gray-400">Calle de la Moda 123</p>
-                  <p className="text-gray-400">Madrid, España 28001</p>
+                  <p className="text-gray-400">Cerro Famatina 1855</p>
+                  <p className="text-gray-400">Florencio Varela, Buenos Aires, Argentina</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
                 <Phone className="h-6 w-6 text-[#0FD9ED] mt-1" />
                 <div>
-                  <h3 className="mb-2">Teléfono</h3>
-                  <p className="text-gray-400">+34 912 345 678</p>
-                  <p className="text-gray-400 text-sm">Lun-Vie 9:00-18:00</p>
+                  <h3 className="mb-2">WhatsApp</h3>
+                  <p className="text-gray-400">+54 9 11 2527 7548</p>
+                  <p className="text-gray-400 text-sm">Lun a Vie · 9 a 18 hs</p>
                 </div>
               </div>
-
               <div className="flex items-start gap-4">
-                <Mail className="h-6 w-6 text-[#E91EA5] mt-1" />
+                <Instagram className="h-6 w-6 text-[#E91EA5] mt-1" />
+
                 <div>
-                  <h3 className="mb-2">Email</h3>
-                  <p className="text-gray-400">info@lapoplu.com</p>
-                  <p className="text-gray-400">colaboraciones@lapoplu.com</p>
+                  <h3 className="mb-2">Instagram</h3>
+
+                  <a
+                    href="https://www.instagram.com/la.poplu/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-[#E91EA5] transition-colors block"
+                  >
+                    @la.poplu
+                  </a>
+
+                  <p className="text-gray-400 text-sm">
+                    Seguinos o escaneá el QR
+                  </p>
+{/* 
+                  <img
+                    src="src/assets/logos/instagram-qr.png"
+                    alt="QR Instagram LA POPLU"
+                    className="mt-3 w-24 h-24 rounded border border-gray-800 bg-white p-1"
+                  /> */}
                 </div>
               </div>
+            {/* Spotify Playlist */}
+            <div className="mt-8">
+            <h3 className="mb-4 uppercase tracking-wider text-sm">Playlist oficial</h3>
+            <div className="rounded-lg overflow-hidden border border-gray-800">
+            <iframe
+            style={{ borderRadius: '12px' }}
+            src="https://open.spotify.com/embed/playlist/5DCyL7mIjw1sqIeRW5Z3Zq?utm_source=generator"
+            width="100%"
+            height="152"
+            frameBorder="0"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+            />
+            </div>
+            <p className="text-xs text-gray-500 mt-2">Escuchá lo que suena en LA POPLU mientras navegás.</p>
+            </div>
             </div>
 
             {/* Contact Form */}
             <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
-              <h3 className="text-xl mb-4">Envíanos un mensaje</h3>
+              <h3 className="text-xl mb-4">Mandanos un mensaje</h3>
               <form className="space-y-4">
                 <input
                   type="text"
@@ -287,9 +326,9 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
                   placeholder="Tu mensaje"
                   rows={4}
                   className="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 focus:outline-none focus:border-[#E91EA5] resize-none"
-                ></textarea>
+                />
                 <Button className="w-full bg-gradient-to-r from-[#E91EA5] to-[#0FD9ED] hover:from-[#d91a95] hover:to-[#0ec9dd]">
-                  Enviar Mensaje
+                  Enviar mensaje
                 </Button>
               </form>
             </div>
@@ -302,9 +341,9 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div className="md:col-span-2">
-              <Logo className="text-3xl mb-4" />
+              <Logo size="md" className="mb-4" />
               <p className="text-sm text-gray-400 mb-4">
-                Moda urbana que define tu estilo. Desliza y brilla con LA POPLU.
+                Moda urbana argentina que define tu estilo. Calle, actitud y flow.
               </p>
               <div className="flex gap-4">
                 <a href="#" className="text-gray-400 hover:text-[#E91EA5] transition-colors">
@@ -320,29 +359,29 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
             </div>
 
             <div>
-              <h4 className="mb-4 uppercase tracking-wider text-sm">Compra</h4>
+              <h4 className="mb-4 uppercase tracking-wider text-sm">Comprar</h4>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li><a href="#" className="hover:text-[#0FD9ED] transition-colors">Catálogo</a></li>
-                <li><a href="#" className="hover:text-[#0FD9ED] transition-colors">Nuevos Lanzamientos</a></li>
-                <li><a href="#" className="hover:text-[#0FD9ED] transition-colors">Ofertas</a></li>
+                <li><a href="#" className="hover:text-[#0FD9ED] transition-colors">Lanzamientos</a></li>
+                <li><a href="#" className="hover:text-[#0FD9ED] transition-colors">Promos</a></li>
                 <li><a href="#" className="hover:text-[#0FD9ED] transition-colors">Virtual Wardrobe</a></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="mb-4 uppercase tracking-wider text-sm">Información</h4>
+              <h4 className="mb-4 uppercase tracking-wider text-sm">Info</h4>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-[#E91EA5] transition-colors">Sobre Nosotros</a></li>
-                <li><a href="#" className="hover:text-[#E91EA5] transition-colors">Envíos</a></li>
-                <li><a href="#" className="hover:text-[#E91EA5] transition-colors">Devoluciones</a></li>
-                <li><a href="#" className="hover:text-[#E91EA5] transition-colors">Términos y Condiciones</a></li>
+                <li><a href="#" className="hover:text-[#E91EA5] transition-colors">Quiénes somos</a></li>
+                <li><a href="#" className="hover:text-[#E91EA5] transition-colors">Envíos a todo el país</a></li>
+                <li><a href="#" className="hover:text-[#E91EA5] transition-colors">Cambios y devoluciones</a></li>
+                <li><a href="#" className="hover:text-[#E91EA5] transition-colors">Términos y condiciones</a></li>
               </ul>
             </div>
           </div>
 
           <div className="text-center text-sm text-gray-500 pt-8 border-t border-gray-800">
-            <p>© 2024 LA POPLU. Todos los derechos reservados.</p>
-            <p className="mt-2">Calle de la Moda 123, Madrid, España 28001 | +34 912 345 678</p>
+            <p>© 2024 LA POPLU. Hecho en Argentina.</p>
+            <p className="mt-2">Florencio Varela · Buenos Aires · Argentina</p>
           </div>
         </div>
       </footer>

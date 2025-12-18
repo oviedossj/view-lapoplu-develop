@@ -1,3 +1,4 @@
+// DressMe.tsx
 import React from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { ArrowRight } from 'lucide-react';
@@ -20,18 +21,15 @@ interface DressMeProps {
 
 export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
   return (
-    <div 
-      className="min-h-screen text-black"
-      style={{
-        backgroundColor: '#ECE9D8' // Windows XP beige
-      }}
-    >
+    <div>
       {/* Windows XP style title bar */}
       <div 
         className="h-8 flex items-center px-2"
         style={{
-          background: 'linear-gradient(to bottom, #0997FF 0%, #0053EE 50%, #0050EE 50%, #06F 100%)',
-          borderBottom: '1px solid #0050EE'
+          background: 'linear-gradient(to bottom, #0f1113ff 0%, #0b0c0dff 100%)',
+          color: 'white',
+          borderRadius: '3px 3px 0 0',
+          border: '1px solid #0b0b0cff'
         }}
       >
         <div className="flex items-center gap-2 flex-1">
@@ -51,8 +49,8 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
       </div>
 
       <div className="flex" style={{ height: 'calc(100vh - 32px)' }}>
-        {/* Left sidebar with leopard pattern */}
-        <div className="w-64 relative overflow-hidden border-r-2" style={{ borderColor: '#8C8C8C' }}>
+        {/* Left sidebar with leopard pattern - expanded to w-80 */}
+        <div className="w-80 relative overflow-hidden border-r-2" style={{ borderColor: '#8C8C8C' }}>
           <LeopardPattern />
         </div>
 
@@ -71,19 +69,19 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
               <div 
                 className="mb-4 px-3 py-2 text-center"
                 style={{
-                  background: 'linear-gradient(to bottom, #0997FF 0%, #0053EE 100%)',
+                  background: 'linear-gradient(to bottom, #0f1113ff 0%, #0b0c0dff 100%)',
                   color: 'white',
-                  borderRadius: '3px',
-                  border: '1px solid #0050EE'
+                  borderRadius: '3px 3px 0 0',
+                  border: '1px solid #0b0b0cff'
                 }}
               >
                 YOUR OUTFIT
               </div>
 
-              {/* Top section */}
+              {/* Top section - FIXED: Reduced empty space */}
               <div className="mb-6">
                 <div 
-                  className="p-6 min-h-[280px] flex items-center justify-center relative"
+                  className="p-3 min-h-[320px] flex items-center justify-center relative"
                   style={{
                     backgroundColor: '#F0F0F0',
                     border: '2px solid',
@@ -94,7 +92,7 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
                   <ImageWithFallback
                     src={currentTop.image}
                     alt={currentTop.name}
-                    className="max-h-[240px] w-auto mx-auto object-contain"
+                    className="max-h-[300px] w-auto mx-auto object-contain"
                   />
                   
                   {/* Arrow and label */}
@@ -115,10 +113,10 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
                 </div>
               </div>
 
-              {/* Bottom section */}
+              {/* Bottom section - FIXED: Reduced empty space */}
               <div className="mb-6">
                 <div 
-                  className="p-6 min-h-[280px] flex items-center justify-center relative"
+                  className="p-3 min-h-[320px] flex items-center justify-center relative"
                   style={{
                     backgroundColor: '#F0F0F0',
                     border: '2px solid',
@@ -129,7 +127,7 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
                   <ImageWithFallback
                     src={currentBottom.image}
                     alt={currentBottom.name}
-                    className="max-h-[240px] w-auto mx-auto object-contain"
+                    className="max-h-[300px] w-auto mx-auto object-contain"
                   />
                   
                   {/* Arrow and label */}
@@ -178,12 +176,12 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
           </div>
         </div>
 
-        {/* Right sidebar with leopard pattern */}
-        <div className="w-64 relative overflow-hidden border-l-2" style={{ borderColor: '#8C8C8C' }}>
+        {/* Right sidebar with leopard pattern - expanded to w-80 */}
+        <div className="w-80 relative overflow-hidden border-l-2" style={{ borderColor: '#8C8C8C' }}>
           <LeopardPattern />
         </div>
       </div>
-    </div>
+    </div>  
   );
 }
 

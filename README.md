@@ -1,7 +1,7 @@
 
   # Ropa Intercambio Website
 
-  This is a code bundle for Ropa Intercambio Website. The original project is available at https://www.figma.com/design/0UzV5aBTPv14O7m2Ovi00I/Ropa-Intercambio-Website.
+  This is a code bundle for Ropa Intercambio Website. The original project is available at https://view-lapoplu-develop-plld.vercel.app/ Ropa-Intercambio-Website.
 
   ## Running the code
 
