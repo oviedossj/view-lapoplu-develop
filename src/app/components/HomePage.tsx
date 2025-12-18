@@ -169,7 +169,7 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
             </div>
             <div className="rounded-xl overflow-hidden shadow-2xl border border-gray-800">
               <ImageWithFallback
-                src="src/assets/41176e103ab5d6988d96688e755af21d79fbb1e2.png"
+                src="utils/paleta-color.png"
                 alt="Paleta de color LA POPLU"
                 className="w-full"
               />
@@ -179,7 +179,7 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="rounded-xl overflow-hidden shadow-2xl border border-gray-800 order-2 md:order-1">
               <ImageWithFallback
-                src="src/assets/fb4edbbd5742abc86facf7c01fe8c9af68115bf1.png"
+                src="utils/packaging.png"
                 alt="Packaging LA POPLU"
                 className="w-full"
               />

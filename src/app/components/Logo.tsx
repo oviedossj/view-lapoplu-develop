@@ -8,9 +8,9 @@ export function Logo({
   size?: "sm" | "md" | "lg";
 }) {
   const logoFiles = {
-    sm: "src/assets/logos/logox2.png",
-    md: "src/assets/logos/logox2.png",
-    lg: "src/assets/logos/logox4.png"
+    sm: "/logos/logox2.png",
+    md: "/logos/logox2.png",
+    lg: "/logos/logox4.png"
   };
 
   const sizeClasses = {
