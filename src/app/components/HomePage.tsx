@@ -27,7 +27,7 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
               <a href="#contact" className="hover:text-[#E91EA5] transition-colors uppercase text-sm tracking-wider">Contacto</a>
             </div>
 
-            <Button
+            {/* <Button
               onClick={() =>
                 document
                   .getElementById('experience')
@@ -37,7 +37,7 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
             >
               <Sparkles className="mr-2 h-4 w-4" />
               Virtual Wardrobe
-            </Button>
+            </Button> */}
           </div>
         </div>
       </nav>
@@ -61,12 +61,12 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
 
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center mt-12">
             <Button
+              onClick={onNavigateToWardrobe}
               size="lg"
-              variant="outline"
               className="bg-gradient-to-r from-[#0FD9ED] to-[#E91EA5] hover:from-[#0ec9dd] hover:to-[#d91a95] text-white px-12 py-6 text-lg"
-              onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Ver Colección
+              <Sparkles className="mr-2 h-5 w-5" />
+              Jugar con la Coleccion
             </Button>
           </div>
         </div>
@@ -140,14 +140,14 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
       </section>
 
       {/* Experience Section */}
-      <section
+      {/* <section
         id="experience"
         className="min-h-screen border-t border-gray-800 bg-black flex items-center"
       >
         <div className="w-full">
           <VirtualWardrobe clothingData={clothingData} />
         </div>
-      </section>
+      </section> */}
 
       {/* Brand Identity Section */}
       <section id="about" className="py-20 px-4 border-t border-gray-800">

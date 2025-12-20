@@ -34,14 +34,14 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
   const currentBottom = clothingData.bottoms[currentBottomIndex];
 
   // Navigation functions for tops
-  const nextTop = () => setCurrentTopIndex((prev) => (prev + 1) % clothingData.tops.length);
-  const prevTop = () => setCurrentTopIndex((prev) => prev === 0 ? clothingData.tops.length - 1 : prev - 1);
+  const nextTop = () => setCurrentTopIndex((prev) =>  prev < clothingData.tops.length - 1 ? prev + 1 : prev );
+  const prevTop = () =>  setCurrentTopIndex((prev) =>  prev > 0 ? prev - 1 : prev  );
   const firstTop = () => setCurrentTopIndex(0);
   const lastTop = () => setCurrentTopIndex(clothingData.tops.length - 1);
 
   // Navigation functions for bottoms
-  const nextBottom = () => setCurrentBottomIndex((prev) => (prev + 1) % clothingData.bottoms.length);
-  const prevBottom = () => setCurrentBottomIndex((prev) => prev === 0 ? clothingData.bottoms.length - 1 : prev - 1);
+  const nextBottom = () => setCurrentBottomIndex((prev) => prev < clothingData.bottoms.length - 1 ? prev + 1 : prev );
+  const prevBottom = () => setCurrentBottomIndex((prev) => prev > 0 ? prev - 1 : prev);
   const firstBottom = () => setCurrentBottomIndex(0);
   const lastBottom = () => setCurrentBottomIndex(clothingData.bottoms.length - 1);
 
@@ -56,15 +56,15 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
   }
 
   return (
-    <div 
-      className="h-screen text-black flex flex-col relative"
-      style={{
-        backgroundColor: '#272829ff'
-      }}
-    >
+    <div className="h-screen text-black flex flex-col relative">
+      {/* Fondo con patrón de leopardo SOLO PARA MÓVIL */}
+      <div className="lg:hidden absolute inset-0 z-0">
+        <LeopardPattern />
+      </div>
+
       {/* Windows XP style title bar */}
       <div 
-        className="h-8 flex items-center px-2"
+        className="h-8 flex items-center px-2 relative z-10"
         style={{
           background: 'linear-gradient(to bottom, #090a0aff 0%, #060607ff 50%, #080909ff 50%, rgba(14, 15, 17, 1) 100%)',
           borderBottom: '1px solid #070708ff'
@@ -81,8 +81,10 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
         </div>
       </div>
 
-      <div className="flex flex-1" style={{ height: 'calc(100vh - 32px)' }}>
-        {/* Left sidebar with leopard pattern - ONLY DESKTOP */}
+      <div 
+        className="flex flex-1 relative z-10" 
+        style={{ height: 'calc(100vh - 32px)',backgroundColor: '#272829ff' }}>
+        {/* Left sidebar with leopard pattern - SOLO DESKTOP */}
         <div className="hidden lg:block w-64 relative overflow-hidden border-r-2" style={{ borderColor: '#8C8C8C' }}>
           <LeopardPattern />
         </div>
@@ -105,7 +107,7 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
             <div 
               className="flex-1 p-6 flex items-center justify-center"
               style={{
-                backgroundColor: '#FFFFFF',
+                backgroundColor: '#f7f7f7',
                 border: '2px solid',
                 borderColor: '#DFDFDF #808080 #808080 #DFDFDF',
                 boxShadow: 'inset 1px 1px 2px rgba(0,0,0,0.1)'
@@ -131,18 +133,15 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
                 borderRadius: '3px 3px 0 0',
                 border: '1px solid #0b0b0cff'
               }}
-            >
-              BOTTOMS
-            </div>
+            > BOTTOMS </div>
             <div 
               className="flex-1 p-6 flex items-center justify-center"
               style={{
-                backgroundColor: '#FFFFFF',
+                backgroundColor: '#f7f7f7',
                 border: '2px solid',
                 borderColor: '#DFDFDF #808080 #808080 #DFDFDF',
                 boxShadow: 'inset 1px 1px 2px rgba(0,0,0,0.1)'
-              }}
-            >
+              }}>
               {currentBottom && (
                 <ImageWithFallback
                   src={currentBottom.image}
@@ -154,7 +153,7 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
           </div>
         </div>
 
-        {/* Right sidebar with leopard pattern - ONLY DESKTOP */}
+        {/* Right sidebar with leopard pattern - SOLO DESKTOP */}
         <div className="hidden lg:block w-64 relative overflow-hidden border-l-2" style={{ borderColor: '#8C8C8C' }}>
           <LeopardPattern />
         </div>
@@ -162,25 +161,16 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
 
       {/* Bottom control panel - Windows XP style */}
       <div 
-        className="border-t-2 p-4"
-        style={{
-          backgroundColor: '#ECE9D8',
-          borderColor: '#383839ff'
-        }}
-      >
+        className="border-t-2 p-4 relative z-10" style={{  backgroundColor: '#ECE9D8', borderColor: '#383839ff'}} >
         <div className="max-w-6xl mx-auto">
           {/* Category navigation */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-4">
             {/* TOPS controls */}
             <div className="space-y-2">
               {/* Mobile header - show name in mobile */}
-              <div className="lg:hidden text-center text-xs uppercase tracking-wider text-gray-700 mb-2">
-                TOPS - {currentTop?.name}
-              </div>
+              <div className="lg:hidden text-center text-xs uppercase tracking-wider text-gray-700 mb-2">  TOPS - {currentTop?.name} </div>
               {/* Desktop header - show name in desktop */}
-              <div className="hidden lg:block text-center text-xs uppercase tracking-wider text-gray-700 mb-2">
-                Tops - {currentTop?.name}
-              </div>
+              <div className="hidden lg:block text-center text-xs uppercase tracking-wider text-gray-700 mb-2"> Tops - {currentTop?.name} </div>
               <div className="flex items-center justify-center gap-2">
                 <XPButton onClick={firstTop} title="First">
                   <ChevronsLeft className="h-4 w-4" />
@@ -191,7 +181,7 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
                 <div 
                   className="px-4 py-2 text-center min-w-[100px] text-sm"
                   style={{
-                    backgroundColor: '#FFFFFF',
+                    backgroundColor: '#f7f7f7',
                     border: '2px solid',
                     borderColor: '#808080 #DFDFDF #DFDFDF #808080'
                   }}
@@ -210,13 +200,9 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
             {/* BOTTOMS controls */}
             <div className="space-y-2">
               {/* Mobile header - show name in mobile */}
-              <div className="lg:hidden text-center text-xs uppercase tracking-wider text-gray-700 mb-2">
-                BOTTOMS - {currentBottom?.name}
-              </div>
+              <div className="lg:hidden text-center text-xs uppercase tracking-wider text-gray-700 mb-2"> BOTTOMS - {currentBottom?.name} </div>
               {/* Desktop header - show name in desktop */}
-              <div className="hidden lg:block text-center text-xs uppercase tracking-wider text-gray-700 mb-2">
-                Bottoms - {currentBottom?.name}
-              </div>
+              <div className="hidden lg:block text-center text-xs uppercase tracking-wider text-gray-700 mb-2">  Bottoms - {currentBottom?.name}</div>
               <div className="flex items-center justify-center gap-2">
                 <XPButton onClick={firstBottom} title="First">
                   <ChevronsLeft className="h-4 w-4" />
@@ -227,7 +213,7 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
                 <div 
                   className="px-4 py-2 text-center min-w-[100px] text-sm"
                   style={{
-                    backgroundColor: '#FFFFFF',
+                    backgroundColor: '#f7f7f7',
                     border: '2px solid',
                     borderColor: '#808080 #DFDFDF #DFDFDF #808080'
                   }}

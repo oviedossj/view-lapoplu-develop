@@ -61,7 +61,7 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
             <div 
               className="p-6"
               style={{
-                backgroundColor: '#FFFFFF',
+                backgroundColor: '#f7f7f7',
                 border: '2px solid',
                 borderColor: '#DFDFDF #808080 #808080 #DFDFDF'
               }}
@@ -92,7 +92,7 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
                     md:h-[320px]
                   "
                   style={{
-                    backgroundColor: '#F0F0F0',
+                    backgroundColor: '#f7f7f7',
                     border: '2px solid',
                     borderColor: '#808080 #DFDFDF #DFDFDF #808080',
                     boxShadow: 'inset 1px 1px 2px rgba(0,0,0,0.1)'
@@ -136,7 +136,7 @@ export function DressMe({ currentTop, currentBottom, onBack }: DressMeProps) {
                     md:h-[320px]
                   "
                   style={{
-                    backgroundColor: '#F0F0F0',
+                    backgroundColor: '#f7f7f7',
                     border: '2px solid',
                     borderColor: '#808080 #DFDFDF #DFDFDF #808080',
                     boxShadow: 'inset 1px 1px 2px rgba(0,0,0,0.1)'
