@@ -1,22 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Button } from './ui/button';
-import { Sparkles, Mail, Phone, MapPin, Instagram, Facebook, Twitter } from 'lucide-react';
+import { Sparkles, Mail, Phone, MapPin, Instagram, Facebook, Twitter, X } from 'lucide-react';
 import { Logo } from './Logo';
-import { VirtualWardrobe } from './VirtualWardrobe';
-import  clothingData  from '../../data/clothingData';
+import clothingData from '../../data/clothingData';
+
 interface HomePageProps {
   onNavigateToWardrobe: () => void;
 }
 
+// Tipos para el catálogo
+type ClothingItem = {
+  id: string;
+  name: string;
+  image: string;
+  category: string;
+  color: string;
+  compatibleWith: string[];
+};
+
+type CatalogType = 'tops' | 'bottoms' | null;
+
 export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
+  const [showCatalog, setShowCatalog] = useState<CatalogType>(null);
+  const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
+
+  // Función para mostrar el catálogo
+  const openCatalog = (type: CatalogType) => {
+    setShowCatalog(type);
+  };
+
+  // Función para cerrar el catálogo
+  const closeCatalog = () => {
+    setShowCatalog(null);
+  };
+
+  // Obtener los items según el tipo
+  const getCatalogItems = (): ClothingItem[] => {
+    if (!showCatalog) return [];
+    return clothingData[showCatalog] || [];
+  };
+
+  const catalogItems = getCatalogItems();
+
+  const handleSubmit = () => {
+    console.log('Mensaje enviado:', contactForm);
+    alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
+    setContactForm({ name: '', email: '', message: '' });
+  };
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navigation */}
       <nav className="border-b border-gray-800 sticky top-0 bg-black/95 backdrop-blur-sm z-50">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            {/* Logo size small en el nav */}
             <Logo size="md" />
             
             <div className="hidden md:flex items-center gap-8">
@@ -26,25 +64,12 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
               <a href="#collaborations" className="hover:text-[#0FD9ED] transition-colors uppercase text-sm tracking-wider">Colaboraciones</a>
               <a href="#contact" className="hover:text-[#E91EA5] transition-colors uppercase text-sm tracking-wider">Contacto</a>
             </div>
-
-            {/* <Button
-              onClick={() =>
-                document
-                  .getElementById('experience')
-                  ?.scrollIntoView({ behavior: 'smooth' })
-              }
-              className="bg-[#E91EA5] hover:bg-[#c91890] text-white"
-            >
-              <Sparkles className="mr-2 h-4 w-4" />
-              Virtual Wardrobe
-            </Button> */}
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
       <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Animated background */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#0FD9ED] rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#E91EA5] rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
@@ -52,7 +77,6 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
 
         <div className="relative z-10 text-center px-4">
           <div className="mb-12">
-            {/* Logo size large en el hero - centrado */}
             <div className="flex justify-center mb-6">
               <Logo size="lg" />
             </div>
@@ -93,7 +117,10 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
                 </div>
                 <div className="p-6">
                   <p className="text-gray-400 text-sm mb-4">Camperas, hoodies, tops y más.</p>
-                  <Button className="w-full bg-[#0FD9ED]/20 hover:bg-[#0FD9ED]/30 border border-[#0FD9ED] text-[#0FD9ED]">
+                  <Button 
+                    onClick={() => openCatalog('tops')}
+                    className="w-full bg-[#0FD9ED]/20 hover:bg-[#0FD9ED]/30 border border-[#0FD9ED] text-[#0FD9ED]"
+                  >
                     Ver Tops
                   </Button>
                 </div>
@@ -111,7 +138,10 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
                 </div>
                 <div className="p-6">
                   <p className="text-gray-400 text-sm mb-4">Pantalones, faldas, shorts..</p>
-                  <Button className="w-full bg-[#E91EA5]/20 hover:bg-[#E91EA5]/30 border border-[#E91EA5] text-[#E91EA5]">
+                  <Button 
+                    onClick={() => openCatalog('bottoms')}
+                    className="w-full bg-[#E91EA5]/20 hover:bg-[#E91EA5]/30 border border-[#E91EA5] text-[#E91EA5]"
+                  >
                     Ver Bottoms
                   </Button>
                 </div>
@@ -130,7 +160,7 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
                 <div className="p-6">
                   <p className="text-gray-400 text-sm mb-4">Complementa tu look con nosotros.</p>
                   <Button className="w-full bg-purple-500/20 hover:bg-purple-500/30 border border-purple-400 text-purple-400">
-                    Ver Accesorios
+                    Próximamente
                   </Button>
                 </div>
               </div>
@@ -139,15 +169,71 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
         </div>
       </section>
 
-      {/* Experience Section */}
-      {/* <section
-        id="experience"
-        className="min-h-screen border-t border-gray-800 bg-black flex items-center"
-      >
-        <div className="w-full">
-          <VirtualWardrobe clothingData={clothingData} />
+      {/* Modal del Catálogo */}
+      {showCatalog && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gray-900 border border-gray-800 rounded-xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            {/* Header del Modal */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-800">
+              <h2 className="text-3xl uppercase tracking-wider">
+                {showCatalog === 'tops' ? (
+                  <span className="text-[#0FD9ED]">Tops</span>
+                ) : (
+                  <span className="text-[#E91EA5]">Bottoms</span>
+                )}
+              </h2>
+              <button
+                onClick={closeCatalog}
+                className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-lg"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+
+            {/* Contenido del Modal */}
+            <div className="overflow-y-auto p-6 flex-1">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {catalogItems.map((item) => (
+                  <div
+                    key={item.id}
+                    className="bg-gray-800 border-2 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 group"
+                    style={{
+                      borderColor: showCatalog === 'tops' ? 'rgba(15, 217, 237, 0.3)' : 'rgba(233, 30, 165, 0.3)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = showCatalog === 'tops' ? '#0FD9ED' : '#E91EA5';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = showCatalog === 'tops' ? 'rgba(15, 217, 237, 0.3)' : 'rgba(233, 30, 165, 0.3)';
+                    }}
+                  >
+                    <div className="aspect-square bg-gray-900 flex items-center justify-center p-4">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                        onError={(e) => {
+                          e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%23374151" width="200" height="200"/%3E%3Ctext fill="%239CA3AF" font-family="sans-serif" font-size="14" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3EImagen no disponible%3C/text%3E%3C/svg%3E';
+                        }}
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-medium text-center text-lg">{item.name}</h3>
+                      <p className="text-sm text-gray-500 text-center mt-1">{item.id}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {catalogItems.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-gray-400 text-lg">No hay productos disponibles en esta categoría.</p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      </section> */}
+      )}
 
       {/* Brand Identity Section */}
       <section id="about" className="py-20 px-4 border-t border-gray-800">
@@ -245,7 +331,6 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
           <h2 className="text-4xl mb-12 text-center uppercase tracking-wider">Contactanos</h2>
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
-            {/* Contact Info */}
             <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <MapPin className="h-6 w-6 text-[#E91EA5] mt-1" />
@@ -264,12 +349,11 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
                   <p className="text-gray-400 text-sm">Lun a Vie · 9 a 18 hs</p>
                 </div>
               </div>
+
               <div className="flex items-start gap-4">
                 <Instagram className="h-6 w-6 text-[#E91EA5] mt-1" />
-
                 <div>
                   <h3 className="mb-2">Instagram</h3>
-
                   <a
                     href="https://www.instagram.com/la.poplu/"
                     target="_blank"
@@ -278,59 +362,58 @@ export function HomePage({ onNavigateToWardrobe }: HomePageProps) {
                   >
                     @la.poplu
                   </a>
-
-                  <p className="text-gray-400 text-sm">
-                    Seguinos o escaneá el QR
-                  </p>
-{/* 
-                  <img
-                    src="src/assets/logos/instagram-qr.png"
-                    alt="QR Instagram LA POPLU"
-                    className="mt-3 w-24 h-24 rounded border border-gray-800 bg-white p-1"
-                  /> */}
+                  <p className="text-gray-400 text-sm">Seguinos o escaneá el QR</p>
                 </div>
               </div>
-            {/* Spotify Playlist */}
-            <div className="mt-8">
-            <h3 className="mb-4 uppercase tracking-wider text-sm">Playlist oficial</h3>
-            <div className="rounded-lg overflow-hidden border border-gray-800">
-            <iframe
-            style={{ borderRadius: '12px' }}
-            src="https://open.spotify.com/embed/playlist/5DCyL7mIjw1sqIeRW5Z3Zq?utm_source=generator"
-            width="100%"
-            height="152"
-            frameBorder="0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-            />
-            </div>
-            <p className="text-xs text-gray-500 mt-2">Escuchá lo que suena en LA POPLU mientras navegás.</p>
-            </div>
+
+              <div className="mt-8">
+                <h3 className="mb-4 uppercase tracking-wider text-sm">Playlist oficial</h3>
+                <div className="rounded-lg overflow-hidden border border-gray-800">
+                  <iframe
+                    style={{ borderRadius: '12px' }}
+                    src="https://open.spotify.com/embed/playlist/5DCyL7mIjw1sqIeRW5Z3Zq?utm_source=generator"
+                    width="100%"
+                    height="152"
+                    frameBorder="0"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-2">Escuchá lo que suena en LA POPLU mientras navegás.</p>
+              </div>
             </div>
 
-            {/* Contact Form */}
             <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
               <h3 className="text-xl mb-4">Mandanos un mensaje</h3>
-              <form className="space-y-4">
+              <div className="space-y-4">
                 <input
                   type="text"
                   placeholder="Tu nombre"
+                  value={contactForm.name}
+                  onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
                   className="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 focus:outline-none focus:border-[#E91EA5]"
                 />
                 <input
                   type="email"
                   placeholder="Tu email"
+                  value={contactForm.email}
+                  onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
                   className="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 focus:outline-none focus:border-[#0FD9ED]"
                 />
                 <textarea
                   placeholder="Tu mensaje"
+                  value={contactForm.message}
+                  onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
                   rows={4}
                   className="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 focus:outline-none focus:border-[#E91EA5] resize-none"
                 />
-                <Button className="w-full bg-gradient-to-r from-[#E91EA5] to-[#0FD9ED] hover:from-[#d91a95] hover:to-[#0ec9dd]">
+                <Button 
+                  onClick={handleSubmit}
+                  className="w-full bg-gradient-to-r from-[#E91EA5] to-[#0FD9ED] hover:from-[#d91a95] hover:to-[#0ec9dd]"
+                >
                   Enviar mensaje
                 </Button>
-              </form>
+              </div>
             </div>
           </div>
         </div>

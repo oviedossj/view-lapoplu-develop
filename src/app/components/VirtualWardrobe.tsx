@@ -1,6 +1,6 @@
 // VirtualWardrobe.tsx
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, X } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { DressMe } from './DressMe';
 import { Logo } from './Logo';
@@ -25,10 +25,14 @@ interface VirtualWardrobeProps {
   clothingData: ClothingData;
 }
 
+type CatalogFilter = 'all' | 'tops' | 'bottoms';
+
 export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
   const [currentTopIndex, setCurrentTopIndex] = useState(0);
   const [currentBottomIndex, setCurrentBottomIndex] = useState(0);
   const [showDressMe, setShowDressMe] = useState(false);
+  const [showCatalog, setShowCatalog] = useState(false);
+  const [catalogFilter, setCatalogFilter] = useState<CatalogFilter>('all');
 
   const currentTop = clothingData.tops[currentTopIndex];
   const currentBottom = clothingData.bottoms[currentBottomIndex];
@@ -44,6 +48,33 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
   const prevBottom = () => setCurrentBottomIndex((prev) => prev > 0 ? prev - 1 : prev);
   const firstBottom = () => setCurrentBottomIndex(0);
   const lastBottom = () => setCurrentBottomIndex(clothingData.bottoms.length - 1);
+
+  // Función para seleccionar una prenda del catálogo
+  const selectItem = (item: ClothingItem) => {
+    if (item.category === 'top') {
+      const index = clothingData.tops.findIndex(t => t.id === item.id);
+      if (index !== -1) setCurrentTopIndex(index);
+    } else if (item.category === 'bottom') {
+      const index = clothingData.bottoms.findIndex(b => b.id === item.id);
+      if (index !== -1) setCurrentBottomIndex(index);
+    }
+    setShowCatalog(false);
+  };
+
+  // Obtener items filtrados
+  const getFilteredItems = (): ClothingItem[] => {
+    switch (catalogFilter) {
+      case 'tops':
+        return clothingData.tops;
+      case 'bottoms':
+        return clothingData.bottoms;
+      case 'all':
+      default:
+        return [...clothingData.tops, ...clothingData.bottoms];
+    }
+  };
+
+  const filteredItems = getFilteredItems();
 
   if (showDressMe) {
     return (
@@ -235,12 +266,174 @@ export function VirtualWardrobe({ clothingData }: VirtualWardrobeProps) {
             <XPButton large onClick={() => setShowDressMe(true)} primary>
               Dress Me
             </XPButton>
-            <XPButton large>
+            <XPButton large onClick={() => setShowCatalog(true)}>
               More
             </XPButton>
           </div>
         </div>
       </div>
+
+      {/* Catalog Modal - Windows XP Style */}
+      {showCatalog && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div 
+            className="w-full max-w-6xl max-h-[90vh] flex flex-col"
+            style={{
+              backgroundColor: '#ECE9D8',
+              border: '3px solid',
+              borderColor: '#DFDFDF #808080 #808080 #DFDFDF',
+              borderRadius: '8px 8px 0 0',
+              boxShadow: '4px 4px 8px rgba(0,0,0,0.3)'
+            }}
+          >
+            {/* Title bar */}
+            <div 
+              className="h-8 flex items-center px-2"
+              style={{
+                background: 'linear-gradient(to bottom, #090a0aff 0%, #060607ff 50%, #080909ff 50%, rgba(14, 15, 17, 1) 100%)',
+                borderRadius: '5px 5px 0 0'
+              }}
+            >
+              <div className="flex items-center gap-2 flex-1">
+                <div className="w-4 h-4 bg-white/20 rounded-sm"></div>
+                <span className="text-white text-sm">Complete Catalog - LA POPLU</span>
+              </div>
+              <div className="flex gap-1">
+                <button
+                  onClick={() => setShowCatalog(false)}
+                  className="w-5 h-5 bg-[#D93831] hover:bg-[#E14842] flex items-center justify-center text-white text-xs cursor-pointer"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+
+            {/* Tabs */}
+            <div 
+              className="flex gap-1 px-2 pt-2"
+              style={{ backgroundColor: '#ECE9D8' }}
+            >
+              <TabButton 
+                active={catalogFilter === 'all'} 
+                onClick={() => setCatalogFilter('all')}
+              >
+                All Items ({clothingData.tops.length + clothingData.bottoms.length})
+              </TabButton>
+              <TabButton 
+                active={catalogFilter === 'tops'} 
+                onClick={() => setCatalogFilter('tops')}
+              >
+                Tops ({clothingData.tops.length})
+              </TabButton>
+              <TabButton 
+                active={catalogFilter === 'bottoms'} 
+                onClick={() => setCatalogFilter('bottoms')}
+              >
+                Bottoms ({clothingData.bottoms.length})
+              </TabButton>
+            </div>
+
+            {/* Content area */}
+            <div 
+              className="flex-1 overflow-y-auto p-4 m-2"
+              style={{
+                backgroundColor: '#FFFFFF',
+                border: '2px solid',
+                borderColor: '#808080 #DFDFDF #DFDFDF #808080',
+                boxShadow: 'inset 1px 1px 2px rgba(0,0,0,0.1)'
+              }}
+            >
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                {filteredItems.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => selectItem(item)}
+                    className="cursor-pointer group"
+                    style={{
+                      backgroundColor: '#ECE9D8',
+                      border: '2px solid',
+                      borderColor: '#DFDFDF #808080 #808080 #DFDFDF',
+                      padding: '8px'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#D4D0C8';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = '#ECE9D8';
+                    }}
+                  >
+                    <div 
+                      className="aspect-square flex items-center justify-center mb-2 p-2"
+                      style={{
+                        backgroundColor: '#FFFFFF',
+                        border: '1px solid #808080'
+                      }}
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="max-w-full max-h-full object-contain"
+                        onError={(e) => {
+                          e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect fill="%23CCCCCC" width="100" height="100"/%3E%3Ctext fill="%23666666" font-family="sans-serif" font-size="10" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3ENo image%3C/text%3E%3C/svg%3E';
+                        }}
+                      />
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xs font-medium mb-1">{item.name}</div>
+                      <div 
+                        className="text-xs px-2 py-0.5 inline-block"
+                        style={{
+                          backgroundColor: item.category === 'top' ? '#0FD9ED' : '#E91EA5',
+                          color: 'white',
+                          borderRadius: '2px'
+                        }}
+                      >
+                        {item.category === 'top' ? 'TOP' : 'BOTTOM'}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {filteredItems.length === 0 && (
+                <div className="text-center py-12 text-gray-600">
+                  <p>No items available in this category.</p>
+                </div>
+              )}
+            </div>
+
+            {/* Status bar */}
+            <div 
+              className="h-6 px-2 flex items-center text-xs"
+              style={{
+                backgroundColor: '#ECE9D8',
+                borderTop: '2px solid',
+                borderColor: '#DFDFDF #808080 #808080 #DFDFDF'
+              }}
+            >
+              <div 
+                className="px-2 mr-2"
+                style={{
+                  border: '1px solid #808080',
+                  borderStyle: 'inset'
+                }}
+              >
+                {filteredItems.length} items
+              </div>
+              <div className="flex-1"></div>
+              <div 
+                className="px-2"
+                style={{
+                  border: '1px solid #808080',
+                  borderStyle: 'inset'
+                }}
+              >
+                Click to select
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -289,6 +482,38 @@ function XPButton({
         large ? 'px-8 py-3 text-base uppercase tracking-wider min-w-[140px]' : 'p-2'
       }`}
       style={baseStyle}
+    >
+      {children}
+    </button>
+  );
+}
+
+// Tab button component for catalog filter
+function TabButton({
+  children,
+  active,
+  onClick
+}: {
+  children: React.ReactNode;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="px-4 py-2 text-sm"
+      style={{
+        backgroundColor: active ? '#FFFFFF' : '#D4D0C8',
+        border: '2px solid',
+        borderColor: active 
+          ? '#DFDFDF #808080 #FFFFFF #808080'
+          : '#DFDFDF #808080 #808080 #DFDFDF',
+        borderBottom: active ? 'none' : '2px solid #808080',
+        borderRadius: '3px 3px 0 0',
+        marginBottom: active ? '0' : '0',
+        cursor: 'pointer',
+        fontWeight: active ? 'bold' : 'normal'
+      }}
     >
       {children}
     </button>
